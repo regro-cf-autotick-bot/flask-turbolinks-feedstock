@@ -1,30 +1,30 @@
 {% set name = "Flask-Turbolinks" %}
 {% set version = "0.2.0" %}
-{% set hash_type = "sha256" %}
-{% set hash_value = "9086fa5d425db3530efe7eb96d90067f0531158864f0e7130846e534069d6381" %}
 
 package:
   version: '{{ version }}'
   name: '{{ name|lower }}'
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  '{{ hash_type }}': '{{ hash_value }}'
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  'sha256': '9086fa5d425db3530efe7eb96d90067f0531158864f0e7130846e534069d6381'
 
 build:
   noarch: python
   script: python setup.py install  --single-version-externally-managed --record=record.txt
-  number: 0
+  number: 1
 
 requirements:
-  build:
-    - python
+  host:
+    - python {{ python_min }}
     - setuptools
   run:
-    - python
+    - python >={{ python_min }}
     - flask
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - flask_turbolinks
 
